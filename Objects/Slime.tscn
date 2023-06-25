@@ -16,6 +16,8 @@ shape = SubResource("CircleShape2D_ii6bx")
 
 [node name="Mesh" type="Node2D" parent="."]
 script = ExtResource("2_2mrt7")
+SIZE = 7
+SMOOTHNESS = 5
 
 [node name="Sprite-0001" type="Sprite2D" parent="Mesh"]
 texture = ExtResource("3_syf7e")
