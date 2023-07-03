@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://csaht8r6fcdx0"]
+[gd_scene load_steps=6 format=3 uid="uid://csaht8r6fcdx0"]
 
 [ext_resource type="Script" path="res://Objects/Slime.gd" id="1_n2ryl"]
 [ext_resource type="Script" path="res://Code/Mesh.gd" id="2_2mrt7"]
-[ext_resource type="Texture2D" uid="uid://bn14royukh4b6" path="res://Assets/Textures/Sprites/slime_eyes.png" id="3_syf7e"]
+[ext_resource type="Texture2D" uid="uid://24uultgaxgkm" path="res://slime_highlightt.png" id="3_b3inb"]
+[ext_resource type="Texture2D" uid="uid://bx8cblqeiapwq" path="res://slime_eyes.png" id="3_yv0dg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ii6bx"]
 
@@ -16,8 +17,9 @@ shape = SubResource("CircleShape2D_ii6bx")
 
 [node name="Mesh" type="Node2D" parent="."]
 script = ExtResource("2_2mrt7")
-SIZE = 7
-SMOOTHNESS = 5
+
+[node name="SlimeHighlightt" type="Sprite2D" parent="Mesh"]
+texture = ExtResource("3_b3inb")
 
 [node name="Sprite-0001" type="Sprite2D" parent="Mesh"]
-texture = ExtResource("3_syf7e")
+texture = ExtResource("3_yv0dg")

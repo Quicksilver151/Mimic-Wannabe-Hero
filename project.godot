@@ -14,9 +14,13 @@ config/name="Mimic - Wannabe Hero"
 config/name_localized={
 "ja": "ミミック；ヒーローがほしいい"
 }
-run/main_scene="res://Scenes/Menu.tscn"
+run/main_scene="res://Scenes/level.tscn"
 config/features=PackedStringArray("4.0")
-config/icon="res://icon.png"
+config/icon="res://slime-indexed.png"
+
+[aseprite_importers]
+
+aseprite_executable_path="/home/renderinguser/Programs/aseprite/build/bin/aseprite"
 
 [display]
 
@@ -26,9 +30,12 @@ window/size/window_width_override=1536
 window/size/window_height_override=1024
 window/stretch/mode="viewport"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/nklbdev.aseprite_importers/plugin.cfg")
+
 [rendering]
 
 textures/default_filters/use_nearest_mipmap_filter=true
+environment/defaults/default_clear_color=Color(0.129412, 0.129412, 0.137255, 1)
 textures/canvas_textures/default_texture_filter=3
-environment/default_clear_color=Color(0.2, 0.231373, 0.309804, 1)
-environment/default_environment="res://default_env.tres"

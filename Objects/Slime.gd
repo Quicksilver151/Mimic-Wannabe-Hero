@@ -10,7 +10,7 @@ func _physics_process(delta):
 	
 	var nv = iv.normalized()
 	
-	velocity = nv * SPEED
+	velocity = lerp(velocity, nv * SPEED, 0.2)
 	
 	move_and_slide()
 	

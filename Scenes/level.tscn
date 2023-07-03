@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dotnmajeiu81w"]
+
+[ext_resource type="Texture2D" uid="uid://d1xj527sug2y" path="res://Assets/Textures/level.aseprite" id="1_6ptc6"]
+[ext_resource type="PackedScene" uid="uid://csaht8r6fcdx0" path="res://Objects/Slime.tscn" id="2_lqke8"]
+
+[node name="Level" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(166, 133)
+
+[node name="Level" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(-18, -33)
+texture = ExtResource("1_6ptc6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(-15, -34)
+polygon = PackedVector2Array(-144, -29, 143, -28, 144, 96, -148, 100, -94, 89, -78, 39, -82, 15, -80, -13, -64, -15, -64, -27, -147, -27, -158, -30, -160, 128, 208, 128, 208, -112, -160, -112, -160, -32)
+
+[node name="Slime" parent="." instance=ExtResource("2_lqke8")]
+position = Vector2(160, 139)

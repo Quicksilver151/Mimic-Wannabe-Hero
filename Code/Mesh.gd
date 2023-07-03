@@ -73,8 +73,8 @@ func enlarge(points: PackedVector2Array, magnitude: float):
 func _draw():
 	var final_points = subdivision(SMOOTHNESS, enlarge(core_points, SIZE))
 #	print(final_points)
-	var colors = PackedColorArray([Color.BLUE])
-	var colors2 =  Color.DARK_BLUE
+	var colors = PackedColorArray([Color("4b80ca")])
+	var colors2 =  Color("3a3858")
 	draw_polygon(final_points, colors)
 	final_points.append(final_points[0])
 	draw_polyline(final_points,colors2)
