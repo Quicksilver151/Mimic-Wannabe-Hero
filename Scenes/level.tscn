@@ -9,12 +9,12 @@
 position = Vector2(166, 133)
 
 [node name="Level" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(-18, -33)
+position = Vector2(10, -5)
 texture = ExtResource("1_6ptc6")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(-15, -34)
-polygon = PackedVector2Array(-144, -29, 143, -28, 144, 96, -148, 100, -94, 89, -78, 39, -82, 15, -80, -13, -64, -15, -64, -27, -147, -27, -158, -30, -160, 128, 208, 128, 208, -112, -160, -112, -160, -32)
+position = Vector2(10, -5)
+polygon = PackedVector2Array(-144, -29, 143, -28, 144, 96, -148, 100, -96, 96, -78, 39, -80, 16, -80, -13, -64, -15, -64, -27, -147, -27, -158, -30, -160, 0, -160, 48, -160, 128, 208, 128, 208, -112, -160, -112, -160, -32)
 
 [node name="Slime" parent="." instance=ExtResource("2_lqke8")]
-position = Vector2(160, 139)
+position = Vector2(240, 158)

@@ -18,8 +18,8 @@ extends Node2D
 # plan:
 # have polygon node
 # use points from node and modify em
-# get_motion()
-# apply motion to points
+# get global pos
+# interpolate global pos but with a min range
 # subdivide()
 # scale()
 # draw()
@@ -55,7 +55,8 @@ func subdivision(smoothness: int, points: PackedVector2Array) -> PackedVector2Ar
 
 func _physics_process(delta):
 	
-	
+	var gpos = global_position
+	print(gpos)
 	
 	
 	queue_redraw()
