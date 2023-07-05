@@ -2,19 +2,20 @@ extends Node2D
 
 @onready var parent = self.get_parent() if self.get_node_or_null("../") != null else self
 @export_category("stats")
-@export var DEFAULT_POINTS: PackedVector2Array = [
-	Vector2.UP,
-	(Vector2.UP + Vector2.RIGHT).normalized(),
-	Vector2.RIGHT * 1.25,
-	(Vector2.RIGHT + Vector2.DOWN).normalized(),
-	Vector2.DOWN*0.8,
-	(Vector2.DOWN + Vector2.LEFT).normalized(),
-	Vector2.LEFT * 1.25,
-	(Vector2.LEFT + Vector2.UP).normalized(),
-]
+#@export var DEFAULT_POINTS: PackedVector2Array = [
+#	Vector2.UP,
+#	(Vector2.UP + Vector2.RIGHT).normalized(),
+#	Vector2.RIGHT * 1.25,
+#	(Vector2.RIGHT + Vector2.DOWN).normalized(),
+#	Vector2.DOWN*0.8,
+#	(Vector2.DOWN + Vector2.LEFT).normalized(),
+#	Vector2.LEFT * 1.25,
+#	(Vector2.LEFT + Vector2.UP).normalized(),
+#]
+@onready var DEFAULT_POINTS = $POINTS.polygon
 @export var SIZE = 6
 @export_range(0,5,1) var SMOOTHNESS = 1
-@export var core_points = DEFAULT_POINTS
+@onready var core_points = DEFAULT_POINTS
 # plan:
 # have polygon node
 # use points from node and modify em
@@ -23,6 +24,8 @@ extends Node2D
 # subdivide()
 # scale()
 # draw()
+func _ready():
+	$bg.visible = false
 
 func subdivision(smoothness: int, points: PackedVector2Array) -> PackedVector2Array:
 	var subdivided_points = points.duplicate()
@@ -54,7 +57,7 @@ func subdivision(smoothness: int, points: PackedVector2Array) -> PackedVector2Ar
 
 
 func _physics_process(delta):
-	
+	core_points = $POINTS.polygon
 	var gpos = global_position
 	print(gpos)
 	

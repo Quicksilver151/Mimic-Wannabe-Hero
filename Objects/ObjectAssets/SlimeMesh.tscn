@@ -1,0 +1,100 @@
+[gd_scene load_steps=13 format=3 uid="uid://v2jq727imqam"]
+
+[ext_resource type="Script" path="res://Code/Mesh.gd" id="1_bfp5d"]
+[ext_resource type="Texture2D" uid="uid://24uultgaxgkm" path="res://slime_highlightt.png" id="2_xn3et"]
+[ext_resource type="Texture2D" uid="uid://bx8cblqeiapwq" path="res://slime_eyes.png" id="3_82t0a"]
+
+[sub_resource type="Animation" id="Animation_mw24e"]
+
+[sub_resource type="Animation" id="Animation_4cmv4"]
+
+[sub_resource type="Animation" id="Animation_0btmm"]
+resource_name = "default"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("POINTS:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107)]
+}
+
+[sub_resource type="Animation" id="Animation_xgy0p"]
+
+[sub_resource type="Animation" id="Animation_5pngs"]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("POINTS:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107), PackedVector2Array(0, -0.5, 0.703125, -0.414062, 1.25, 0, 0.65625, 0.40625, 0.0078125, 0.460938, -0.671875, 0.429688, -1.25, 0, -0.695312, -0.40625)]
+}
+
+[sub_resource type="Animation" id="Animation_fpdio"]
+
+[sub_resource type="Animation" id="Animation_gr5md"]
+
+[sub_resource type="Animation" id="Animation_kp2pr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("POINTS:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qs0tu"]
+_data = {
+"RESET": SubResource("Animation_kp2pr"),
+"absorb": SubResource("Animation_mw24e"),
+"dash": SubResource("Animation_4cmv4"),
+"default": SubResource("Animation_0btmm"),
+"fall": SubResource("Animation_xgy0p"),
+"ground": SubResource("Animation_5pngs"),
+"jump": SubResource("Animation_fpdio"),
+"land": SubResource("Animation_gr5md")
+}
+
+[node name="Mesh" type="Node2D"]
+script = ExtResource("1_bfp5d")
+
+[node name="bg" type="ColorRect" parent="."]
+visible = false
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 24.0
+offset_bottom = 24.0
+color = Color(0.301961, 0.301961, 0.301961, 1)
+
+[node name="SlimeHighlightt" type="Sprite2D" parent="."]
+texture = ExtResource("2_xn3et")
+
+[node name="Sprite-0001" type="Sprite2D" parent="."]
+texture = ExtResource("3_82t0a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_qs0tu")
+}
+
+[node name="POINTS" type="Polygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107)
