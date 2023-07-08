@@ -19,12 +19,27 @@ extends Node2D
 # plan:
 # have polygon node
 # use points from node and modify em
-# get global pos
+# set_drag(POINTS, change in global position?)
+
 # interpolate global pos but with a min range
 # subdivide()
 # scale()
 # draw()
+var global_pos = self.global_position
+var drag_points:PackedVector2Array = [] # exists in global pixel coordinates
+func set_drag(points: PackedVector2Array):
+	var min_points = points
+	
+	for i in drag_points.size():
+		drag_points[i] = drag_points[i].lerp(min_points[i] + (global_pos/SIZE),0.1)
+	
+	
+	global_pos = self.global_position
+	return drag_points
+
+
 func _ready():
+	drag_points = core_points
 	$bg.visible = false
 
 func subdivision(smoothness: int, points: PackedVector2Array) -> PackedVector2Array:
@@ -59,27 +74,36 @@ func subdivision(smoothness: int, points: PackedVector2Array) -> PackedVector2Ar
 func _physics_process(delta):
 	core_points = $POINTS.polygon
 	var gpos = global_position
-	print(gpos)
 	
 	
 	queue_redraw()
 
 
-func enlarge(points: PackedVector2Array, magnitude: float):
+func enlarge(points: PackedVector2Array, magnitude: float, center:Vector2 = Vector2.ZERO):
 	var new_points: PackedVector2Array = []
 	for point in points:
-		var new_point: Vector2  = magnitude * point
+		var new_point: Vector2  = magnitude * (point - center)
 		new_points.append(new_point)
 		
 	return new_points
 
+func translate_points(points: PackedVector2Array, pos:Vector2):
+	var new_points:PackedVector2Array
+	for point in points:
+		new_points.append(point+pos)
+	
+	return new_points
 
 func _draw():
+	
 	var final_points = subdivision(SMOOTHNESS, enlarge(core_points, SIZE))
 #	print(final_points)
 	var colors = PackedColorArray([Color("4b80ca")])
 	var colors2 =  Color("3a3858")
 	draw_polygon(final_points, colors)
+	var okk = subdivision(SMOOTHNESS,translate_points(enlarge(drag_points, SIZE), global_position))
+	draw_polygon(okk, colors)
+	
 	final_points.append(final_points[0])
 	draw_polyline(final_points,colors2)
 	
