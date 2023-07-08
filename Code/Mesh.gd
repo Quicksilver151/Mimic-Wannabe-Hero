@@ -25,17 +25,29 @@ extends Node2D
 # subdivide()
 # scale()
 # draw()
-var global_pos = self.global_position
 var drag_points:PackedVector2Array = [] # exists in global pixel coordinates
 func set_drag(points: PackedVector2Array):
 	var min_points = points
 	
 	for i in drag_points.size():
-		drag_points[i] = drag_points[i].lerp(min_points[i] + (global_pos/SIZE),0.1)
+		drag_points[i] = drag_points[i].lerp(min_points[i] + (global_position/SIZE),0.1)
 	
 	
-	global_pos = self.global_position
 	return drag_points
+
+var prev_global_pos = self.global_position
+var func_timer = 0.0
+var new_global_pos = global_position
+func get_change_in_global_pos(delta:float, time:float = 0.1):
+	func_timer += delta
+	var change
+	if func_timer > time:
+		change = new_global_pos - prev_global_pos
+		prev_global_pos = new_global_pos
+		new_global_pos = global_position
+		func_timer = 0
+	
+	return change
 
 
 func _ready():
@@ -70,11 +82,15 @@ func subdivision(smoothness: int, points: PackedVector2Array) -> PackedVector2Ar
 	return subdivided_points
 
 
-
+var global_change = Vector2.ZERO
 func _physics_process(delta):
 	core_points = $POINTS.polygon
 	var gpos = global_position
-	
+	var x = get_change_in_global_pos(delta)
+	if x:
+		global_change = x
+	else:
+		pass
 	
 	queue_redraw()
 
@@ -100,6 +116,7 @@ func _draw():
 #	print(final_points)
 	var colors = PackedColorArray([Color("4b80ca")])
 	var colors2 =  Color("3a3858")
+	final_points = translate_points(final_points,-global_change/SIZE)
 	draw_polygon(final_points, colors)
 	var okk = subdivision(SMOOTHNESS,translate_points(enlarge(drag_points, SIZE), global_position))
 	draw_polygon(okk, colors)
