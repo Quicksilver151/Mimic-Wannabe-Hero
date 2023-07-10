@@ -26,8 +26,8 @@ aseprite_executable_path="/home/renderinguser/Programs/aseprite/build/bin/asepri
 
 window/size/viewport_width=384
 window/size/viewport_height=256
-window/size/window_width_override=1536
-window/size/window_height_override=1024
+window/size/window_width_override=1152
+window/size/window_height_override=768
 window/stretch/mode="viewport"
 
 [editor_plugins]

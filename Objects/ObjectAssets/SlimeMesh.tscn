@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://v2jq727imqam"]
+[gd_scene load_steps=15 format=3 uid="uid://v2jq727imqam"]
 
 [ext_resource type="Script" path="res://Code/Mesh.gd" id="1_bfp5d"]
 [ext_resource type="Texture2D" uid="uid://24uultgaxgkm" path="res://slime_highlightt.png" id="2_xn3et"]
@@ -19,13 +19,9 @@ tracks/0/keys = {
 "values": [PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107)]
 }
 
-[sub_resource type="Animation" id="Animation_mw24e"]
-
-[sub_resource type="Animation" id="Animation_4cmv4"]
-
 [sub_resource type="Animation" id="Animation_0btmm"]
 resource_name = "default"
-length = 0.1
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,11 +31,9 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
+"update": 1,
 "values": [PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107)]
 }
-
-[sub_resource type="Animation" id="Animation_xgy0p"]
 
 [sub_resource type="Animation" id="Animation_5pngs"]
 length = 0.2
@@ -50,27 +44,44 @@ tracks/0/path = NodePath("POINTS:polygon")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107), PackedVector2Array(0, -0.5, 0.703125, -0.414062, 1.25, 0, 0.65625, 0.40625, 0.0078125, 0.460938, -0.671875, 0.429688, -1.25, 0, -0.695312, -0.40625)]
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107), PackedVector2Array(0, -0.75, 0.705116, -0.560584, 1.25, 0, 0.681679, 0.556679, 0.00390625, 0.630469, -0.689491, 0.568398, -1.25, 0, -0.70121, -0.556679), PackedVector2Array(0, -0.5, 0.703125, -0.414062, 1.25, 0, 0.65625, 0.40625, 0.0078125, 0.460938, -0.671875, 0.429688, -1.25, 0, -0.695312, -0.40625)]
 }
-
-[sub_resource type="Animation" id="Animation_fpdio"]
-
-[sub_resource type="Animation" id="Animation_gr5md"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qs0tu"]
 _data = {
 "RESET": SubResource("Animation_kp2pr"),
-"absorb": SubResource("Animation_mw24e"),
-"dash": SubResource("Animation_4cmv4"),
 "default": SubResource("Animation_0btmm"),
-"fall": SubResource("Animation_xgy0p"),
-"ground": SubResource("Animation_5pngs"),
-"jump": SubResource("Animation_fpdio"),
-"land": SubResource("Animation_gr5md")
+"ground": SubResource("Animation_5pngs")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ih72s"]
+animation = &"default"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pdavv"]
+animation = &"ground"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6y8um"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iog6p"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mrvsr"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_nt2uh"]
+states/Start/position = Vector2(178, 100)
+states/default/node = SubResource("AnimationNodeAnimation_ih72s")
+states/default/position = Vector2(325, 100)
+states/ground/node = SubResource("AnimationNodeAnimation_pdavv")
+states/ground/position = Vector2(325, 212)
+transitions = ["default", "ground", SubResource("AnimationNodeStateMachineTransition_6y8um"), "ground", "default", SubResource("AnimationNodeStateMachineTransition_iog6p"), "Start", "default", SubResource("AnimationNodeStateMachineTransition_mrvsr")]
+graph_offset = Vector2(-52, 28)
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_m02vw"]
 
 [node name="Mesh" type="Node2D"]
 script = ExtResource("1_bfp5d")
@@ -90,7 +101,6 @@ texture = ExtResource("2_xn3et")
 texture = ExtResource("3_82t0a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "default"
 libraries = {
 "": SubResource("AnimationLibrary_qs0tu")
 }
@@ -98,3 +108,8 @@ libraries = {
 [node name="POINTS" type="Polygon2D" parent="."]
 visible = false
 polygon = PackedVector2Array(0, -1, 0.707107, -0.707107, 1.25, 0, 0.707107, 0.707107, 0, 0.8, -0.707107, 0.707107, -1.25, 0, -0.707107, -0.707107)
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_nt2uh")
+anim_player = NodePath("../AnimationPlayer")
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_m02vw")

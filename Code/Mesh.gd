@@ -14,7 +14,7 @@ extends Node2D
 #]
 @onready var DEFAULT_POINTS = $POINTS.polygon
 @export var SIZE = 6
-@export_range(0,5,1) var SMOOTHNESS = 1
+@export_range(0,3,1) var SMOOTHNESS = 1
 @onready var core_points = DEFAULT_POINTS
 # plan:
 # have polygon node
@@ -116,10 +116,9 @@ func _draw():
 #	print(final_points)
 	var colors = PackedColorArray([Color("4b80ca")])
 	var colors2 =  Color("3a3858")
-	final_points = translate_points(final_points,-global_change/SIZE)
+	final_points = translate_points(final_points,-global_change/SIZE) ## temporary
+	
 	draw_polygon(final_points, colors)
-	var okk = subdivision(SMOOTHNESS,translate_points(enlarge(drag_points, SIZE), global_position))
-	draw_polygon(okk, colors)
 	
 	final_points.append(final_points[0])
 	draw_polyline(final_points,colors2)
